@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PARKING STATUS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+  <style>
+    body{
+      background-image: url('https://coolbackgrounds.io/images/backgrounds/index/ranger-4df6c1b6.png');
+      background-size:cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .intro {
+      text-align: center;
+      /* background-color: rgb(207, 218, 233); */
+      /* border: 2px solid black; */
+      padding: 20px;
+      color: rgb(0, 0, 0);
+      /* background-color: #f2f2f2; */
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      /* justify-content: center; */
+      color: rgb(0, 0, 0);
+
+    }
+
+    .slot-container {
+      margin: 29.5px;
+      color: rgb(0, 0, 0);
+      /* Adjust as needed */
+
+      /* padding: 10px; */
+      /* Adjust as needed */
+      /* background-color: beige; */
+      /* border: solid rgb(237, 173, 140); */
+    }
+
+
+    .slot {
+      text-align: center;
+      /* padding: 20px; */
+      color: rgb(0, 0, 0);
+
+    }
+
+    .green-text {
+      color: green;
+    }
+
+    .red-text {
+      color: red;
+    }
+
+    .contact {
+      transition: 1s ease;
+    }
+
+    .contact:hover {
+      -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+      transform: scale(0.8);
+      transition: 1s ease;
+    }
+
+    #map {
+      height: 500px;
+      width: 800px;
+      margin-top: 100px;
+      margin-left: 300px;
+      margin-bottom: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Park At Ease</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if 'email' not in session %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('login')}}">LOGIN</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('signup')}}">SIGNUP</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('logout')}}">LOGOUT</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              MENU
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url_for('check') }}">CHECK</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('reserve') }}">RESERVE</a></li>
+              <li>
+                <!-- <hr class="dropdown-divider"> -->
+              </li>
+              <li><a class="dropdown-item" href="#">PAY</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <a class="contact" href="https://www.linkedin.com/in/rohith-kumar-353578286/" role="button" target="_blank"><img
+            style="height: 30px; margin-right: 10px;"
+            src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png" alt="linkedin"></a>
+        <a class="contact" href="https://github.com/RohithKumar008" role="button" target="_blank"><img
+            style="height: 30px; margin-right: 0px;" src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+            alt="Github"></a>
+
+        <a class="contact" href="{{ url_for('profile') }}"><img style="height: 40px;"
+            src="https://media.istockphoto.com/id/1130884625/vector/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-app-in-circle-design.jpg?s=612x612&w=0&k=20&c=1ky-gNHiS2iyLsUPQkxAtPBWH1BZt0PKBB1WBtxQJRE="
+            alt="user image"></a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="live">
+  {% block content %}
+  <script>
+    function updateSlotStatus(slotId, status) {
+      var slotElement = document.getElementById(slotId);
+      if (status === 'empty') {
+        slotElement.src = 'https://thumbs.dreamstime.com/b/grey-passenger-car-top-view-white-background-isolated-c-118573471.jpg'; // URL for empty slot image
+        // slotElement.style.border = '2px solid green'; // Border color for empty slot
+      } else if (status === 'full') {
+        slotElement.src = 'https://thumbs.dreamstime.com/b/green-cartoon-car-top-view-vector-illustration-eps-green-cartoon-car-top-view-vector-illustration-121136719.jpg'; // URL for full slot image
+        // slotElement.style.border = '2px solid red'; // Border color for full slot
+      }
+
+
+    }
+  </script>
+  <div class="intro">
+    <b style="font-size: 100px;"><I>LIVE Parking Status</I></b><br>
+    <p style="font-family: Georgia, serif; font-size: 40px;">(Jahangirpuri)</p>
+  </div>
+  <div class="box">
+    <div class="block">
+      <div class="container">
+        {% for row in data %}
+        <div class="slot-container">
+          <div class="slot">
+            <table class="table table-hover">
+              <tr>
+                <th>
+                  <p style="font-weight: 600; color: rgb(0, 0, 0);font-size:20px;"> Slot Number</p>
+                </th>
+                <th style="color: rgb(0, 0, 0);">{{ row.slotnumber }}</th>
+              </tr>
+              <tr>
+                <td style="color: rgb(0, 0, 0); font-size: 20px; font-weight: 600;">Slotstatus</td>
+                <td><b>
+                    <p class="{% if row.slotstatus == 'full' %}green-text{% else %}red-text{% endif %}">
+                      <b>{{ row.slotstatus }}</b>
+                    </p>
+                  </b></td>
+              </tr>
+            </table>
+
+            <img id="slot_{{ row.slotnumber }}" style="height: 200px;" src="" alt="slot_image"><br>
+            <a href="https://www.google.com/maps/search/?api=1&query={{ row.latitude }},{{ row.longitude }}"
+              target="_blank">
+              <img style="height: 50px;"
+                src="https://static.vecteezy.com/system/resources/previews/022/613/032/original/google-maps-icon-logo-symbol-free-png.png"
+                alt="maps" title="Click to view map"></a>
+
+            <script>
+              updateSlotStatus('slot_{{ row.slotnumber }}', '{{ row.slotstatus }}');
+              document.getElementById('slot_{{ row.slotnumber }}').addEventListener('mouseover', function () {
+                showHoverText('{{ row.slotnumber }}');
+              });
+              document.getElementById('slot_{{ row.slotnumber }}').addEventListener('mouseleave', function () {
+                hideHoverText('{{ row.slotnumber }}');
+              });
+
+              function showHoverText(slotNumber) {
+                var hoverTextElement = document.getElementById('hover-text');
+                hoverTextElement.innerHTML = getHoverText(slotNumber);
+                hoverTextElement.style.display = 'block';
+              }
+
+              function hideHoverText(slotNumber) {
+                var hoverTextElement = document.getElementById('hover-text');
+                hoverTextElement.style.display = 'none';
+              }
+
+              function getHoverText(slotNumber) {
+                switch (slotNumber) {
+                  case '1':
+                    return "Slot 1: 50 meters from the GATE NO 1 ";
+                  case '2':
+                    return "Slot 2: 40 meters from the GATE NO 1";
+                  case '3':
+                    return "Slot 3: 30 meters from the GATE NO 1";
+                  case '4':
+                    return "Slot 4: 20 meters from the GATE NO 1";
+                  case '5':
+                    return "Slot 5 :10 meters from the GATE NO 1";
+                  default:
+                    return "";
+                }
+              }
+            </script>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  <div id="hover-text" class="hover-text" style="text-align: center; font-weight: 600; color: whitesmoke;"></div>
+</div>
+  <!-- ################################################################################################################# -->
+  <div class="nearme">
+  <div class="intro">
+    <b style="font-size: 100px;"><I>Slots AVAILABLE near you</I></b><br>
+  </div>
+  <div id="map"></div>
+  <div id="slots"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script>
+    var map = L.map('map').setView([0, 0], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var markers = L.markerClusterGroup();
+
+    function showSlots(slots) {
+      markers.clearLayers(); // Clear previous markers
+
+      if (slots.length === 0) {
+        document.getElementById("slots").innerHTML = "<p>No nearby parking slots found.</p>";
+      } else {
+        var list = document.createElement("ul");
+        slots.forEach(function (slot) {
+          var item = document.createElement("li");
+          item.textContent = "Slot Number: " + slot.slotnumber;
+          list.appendChild(item);
+
+          var lat = slot.latitude;
+          var lon = slot.longitude;
+
+          var marker = L.marker([lat, lon])
+            .bindPopup('Slot Number: ' + slot.slotnumber + '<br><a href="https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lon + '">View on Google Maps</a>');
+          markers.addLayer(marker);
+        });
+
+        document.getElementById("slots").appendChild(list);
+      }
+
+      map.addLayer(markers);
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var lat = position.coords.latitude;
+          var lon = position.coords.longitude;
+          map.setView([lat, lon], 10);
+          fetch(`/nearby_slots?lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(data => showSlots(data.slots))
+            .catch(error => console.error('Error:', error));
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    getLocation();
+  </script>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

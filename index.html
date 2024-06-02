@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+  <style>
+    body {
+      background-image: url('https://coolbackgrounds.io/images/backgrounds/index/ranger-4df6c1b6.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .contact {
+      transition: 1s ease;
+    }
+
+    .contact:hover {
+      -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+      transform: scale(0.8);
+      transition: 1s ease;
+    }
+
+    .greeting {
+      /* margin: 30px; */
+      margin-top: 100px;
+      margin-left: 220px;
+      text-align: center;
+      width: 1000px;
+      background-repeat: no-repeat;
+      background-position: center;
+      
+    }
+
+    .nitimage {
+      transition: 1s ease;
+    }
+
+    .nitimage:hover {
+      -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+      transform: scale(0.8);
+      transition: 1s ease;
+    }
+
+    .intro {
+      text-align: center;
+      margin: 50px;
+      /* background-color: #c5ed9d; */
+
+    }
+
+    .options {
+      height: 100px;
+      text-align: center;
+      padding-top: 10px;
+      margin: 100px;
+    }
+
+    .btn-donate {
+      --clr-font-main: hsla(0 0% 20% / 100);
+      --btn-bg-1: hsla(194 100% 69% / 1);
+      --btn-bg-2: hsla(217 100% 56% / 1);
+      --btn-bg-color: hsla(360 100% 100% / 1);
+      --radii: 0.5em;
+      cursor: pointer;
+      padding: 0.9em 1.4em;
+      min-width: 120px;
+      min-height: 44px;
+      font-size: var(--size, 1rem);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-weight: 500;
+      transition: 0.8s;
+      background-size: 280% auto;
+      background-image: linear-gradient(325deg, var(--btn-bg-2) 0%, var(--btn-bg-1) 55%, var(--btn-bg-2) 90%);
+      border: none;
+      border-radius: var(--radii);
+      color: var(--btn-bg-color);
+      box-shadow: 0px 0px 20px rgba(71, 184, 255, 0.5), 0px 5px 5px -1px rgba(58, 125, 233, 0.25), inset 4px 4px 8px rgba(175, 230, 255, 0.5), inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+      text-decoration: none;
+    }
+
+    .btn-donate:hover {
+      background-position: right top;
+    }
+
+    .btn-donate:is(:focus, :focus-visible, :active) {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--btn-bg-color), 0 0 0 6px var(--btn-bg-2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn-donate {
+        transition: linear;
+      }
+    }
+
+    .check {
+      /* display: flex;
+      flex-direction: row; */
+      height: 500px;
+      font-size: 70px;
+      align-items: center;
+      width: 1200px;
+      margin-left: 130px;
+      margin-top: 100px;
+      /* background-color: rgb(141, 154, 219); */
+      color: rgb(0, 0, 0);
+      background-image: url('https://www.shutterstock.com/image-illustration/handsome-cartoon-character-man-glases-260nw-1962886639.jpg');
+      background-size:cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      
+      background-position: 50%;
+      box-sizing: border-box;
+      border: 1px solid #dadce0;
+      -webkit-border-radius: 8px;
+      border-radius: 8px;
+    }
+
+    .reserve {
+      /* display: flex;
+      flex-direction: row; */
+      height: 500px;
+      font-size: 70px;
+      align-items: center;
+      width: 1200px;
+      margin-left: 130px;
+      /* background-color: aquamarine; */
+      color: rgb(10, 9, 9);
+      background-image: url('https://cdn4.vectorstock.com/i/1000x1000/73/13/hotel-booking-app-cartoon-hand-holding-a-phone-vector-27257313.jpg');
+      background-size:90%;
+      background-position: 30%;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      box-sizing: border-box;
+      border: 1px solid #dadce0;
+      -webkit-border-radius: 8px;
+      border-radius: 8px;
+    }
+
+    .button-27 {
+      appearance: none;
+      background-color: #0080ff;
+      /* border: 2px solid #1A1A1A; */
+      border-radius: 15px;
+      box-sizing: border-box;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: inline-block;
+      font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-size: 16px;
+      font-weight: 600;
+      line-height: normal;
+      margin: 0;
+      min-height: 60px;
+      min-width: 0;
+      outline: none;
+      padding: 16px 24px;
+      text-align: center;
+      text-decoration: none;
+      transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      width: 20%;
+      will-change: transform;
+    }
+
+    .button-27:disabled {
+      pointer-events: none;
+    }
+
+    .button-27:hover {
+      box-shadow: rgba(218, 217, 219, 0.25) 0 8px 15px;
+      transform: translateY(-2px);
+    }
+
+    .button-27:active {
+      box-shadow: none;
+      transform: translateY(0);
+    }
+    
+  </style>
+</head>
+
+<body>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Park At Ease</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if 'email' not in session %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('login')}}">LOGIN</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('signup')}}">SIGNUP</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('logout')}}">LOGOUT</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              MENU
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url_for('check') }}">CHECK</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('reserve') }}">RESERVE</a></li>
+              <li>
+                <!-- <hr class="dropdown-divider"> -->
+              </li>
+              <li><a class="dropdown-item" href="#">PAY</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <a class="contact" href="https://www.linkedin.com/in/rohith-kumar-353578286/" role="button" target="_blank"><img
+            style="height: 30px; margin-right: 10px;"
+            src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png" alt="linkedin"></a>
+        <a class="contact" href="https://github.com/RohithKumar008" role="button" target="_blank"><img
+            style="height: 30px; margin-right: 0px;" src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+            alt="Github"></a>
+
+        <a class="contact" href="{{ url_for('profile') }}"><img style="height: 40px;"
+            src="https://media.istockphoto.com/id/1130884625/vector/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-app-in-circle-design.jpg?s=612x612&w=0&k=20&c=1ky-gNHiS2iyLsUPQkxAtPBWH1BZt0PKBB1WBtxQJRE="
+            alt="user image"></a>
+      </div>
+    </div>
+  </nav>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  <div class="alert alert-{{ category }}" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <div class="intro">
+    <h1 style="font-size: 40px; font-weight: 800;">
+      <b>Check Parking Availability and Reserve Your Slot at any Metro Station in Delhi.</i></b>
+    </h1>
+  </div>
+  <div class="greeting">
+    <div class="nitimage">
+      <img style="height: 330px;"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Delhi_Metro_logo.svg/640px-Delhi_Metro_logo.svg.png"
+        alt="metro icon">
+    </div>
+  </div>
+
+  <div class="check">
+    <div style=" margin-top: 100px; margin-left: 50px; margin-bottom: 100px; font-weight: 600;">
+      Check before you reach and park at your ease with our application
+      Just one tap ahed!!
+    </div>
+    
+  </div>
+  <div class="options">
+    <a href="{{ url_for('check') }}" class="button-27" style=" font-size: 30px;font-family: Georgia, serif;">CHECK</a>
+  </div>
+  <div class="reserve">
+    <!-- <div>
+      <img style="margin-left: 100px; margin-top: 130px;"
+        src="https://st3.depositphotos.com/2872743/12982/i/450/depositphotos_129823422-stock-photo-man-smiley-relaxing-beach-deck.jpg"
+        alt="man chilling in chair">
+    </div> -->
+    <div style=" margin-top: 150px; margin-left: 50px; margin-bottom: 100px; font-weight: 600;">
+      Tensed about the parking slot? RESERVE right away be tension free of parking 😎!!
+    </div>
+  </div>
+  <div class="options">
+    <a href="{{ url_for('reserve') }}" class="button-27"
+      style=" font-size: 30px; font-family: Georgia, serif;">RESERVE</a>
+  </div>
+  
+
+</body>
+
+</html>
